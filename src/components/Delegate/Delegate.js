@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Center, Heading, Spinner, Stack, Text, useColorModeValue, useDisclosure } from '@chakra-ui/react';
 import { useContract } from 'wagmi';
+
+// Utils
+import { ethers } from 'ethers';
+import { useDisconnect } from 'wagmi';
+
+// Data
 import { SC_ABI, SC_ADDRESS } from '../../data/constants';
 import post from '../../data/325.json';
-import { ethers } from 'ethers';
-import DelegateModal from '../DelegateModal/DelegateModal';
-//import axios from 'axios';
-import { useDisconnect } from 'wagmi';
+
+// Components
 import Applicants from './Applicants';
 import Stats from './Stats';
+
+// Modal
+import DelegateModal from '../DelegateModal/DelegateModal';
 
 /**
  * @name Delegate
