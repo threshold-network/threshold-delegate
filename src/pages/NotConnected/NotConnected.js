@@ -1,6 +1,6 @@
 import { Box, Button, Center, Text } from '@chakra-ui/react';
 import { useWeb3Modal } from '@web3modal/react';
-import Footer from '../Footer/Footer';
+import Footer from '../../components/Navigation/Footer/Footer';
 
 /**
  * @name NotConnected

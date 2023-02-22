@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Image, Spacer, useColorModeValue } from '@chakra-ui/react';
-import ColorModeSwitcher from '../ColorModeSwitcher/ColorModeSwitcher';
+import ColorModeSwitcher from '../../ColorModeSwitcher/ColorModeSwitcher';
 
 const Header = () => {
 
