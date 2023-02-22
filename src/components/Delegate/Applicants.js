@@ -7,7 +7,7 @@ import DelegatorCard from '../DelegatorCard/DelegatorCard';
  * @dev This component is used in the Delegate component.
  * @param {object} delegators - The delegators.
  * @param {function} handleClick - The handleClick function.
- * @author Jesús Sánchez Fernández
+ * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
  * @version 1.0.0
  */
 const Applicants = ({ delegators, handleClick }) => {

@@ -9,7 +9,7 @@ import { NULL_ADDRESS } from '../../data/constants';
  * @param {number} data.balance - The user's balance.
  * @param {number} data.votes - The user's votes.
  * @param {string} data.delegates - The user's delegates.
- * @author Jesús Sánchez Fernández
+ * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
  * @version 1.0.0
  */
 const Stats = ({ data }) => {

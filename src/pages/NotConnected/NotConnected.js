@@ -6,7 +6,7 @@ import Footer from '../../components/Navigation/Footer/Footer';
  * @name NotConnected
  * @description Displays a message to the user to connect their wallet.
  * @dev This component is used in the Home component.
- * @author Jesús Sánchez Fernández
+ * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
  * @version 1.0.0
  */
 const NotConnected = () => {

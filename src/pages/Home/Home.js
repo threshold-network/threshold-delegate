@@ -7,7 +7,7 @@ import NotConnected from '../NotConnected/NotConnected';
  * @name Home
  * @description Displays the Delegate component if the user is connected, otherwise it displays the NotConnected component.
  * @dev This component is used in the App component.
- * @author Jesús Sánchez Fernández
+ * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
  * @version 1.0.0
  */
 const Home = () => {

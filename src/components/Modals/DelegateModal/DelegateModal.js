@@ -27,7 +27,7 @@ import { errorToast, infoToast, successToast } from '../../../utils/toastify';
  * @param {string} selectedUser.name - The selectedUser's name.
  * @param {number} balance - The user's balance.
  * @param {object} contract - The contract object.
- * @author Jesús Sánchez Fernández
+ * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
  * @version 1.0.0
  */
 const DelegateModal = ({ onClose, isOpen, selectedUser, balance, contract }) => {
