@@ -5,8 +5,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { ETHEREUM_CLIENT, projectId, theme, WAGMI_CLIENT } from './data/constants';
 
 // Components
-import Header from './components/Header/Header';
-import Home from './components/Home/Home';
+import Header from './components/Navigation/Header/Header';
+import Home from './pages/Home/Home';
 
 // Web3Modal
 import { Web3Modal } from '@web3modal/react';
