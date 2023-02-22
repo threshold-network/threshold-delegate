@@ -241,9 +241,9 @@ const Delegate = ({ address, connector }) => {
                     )}
 
                     <Center>
-                        <Stack direction="row" spacing={4}>
+                        <Stack direction="row" spacing={8}>
                             <Button variant="ghost" onClick={handleManualDelegation}>
-                                Manual delegation
+                                Custom delegate
                             </Button>
                             <Button variant="ghost" onClick={disconnect}>
                                 Disconnect
