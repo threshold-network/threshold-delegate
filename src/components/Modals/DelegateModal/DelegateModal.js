@@ -14,7 +14,7 @@ import {
 	useColorModeValue,
 	useToast,
 } from '@chakra-ui/react';
-import { errorToast, infoToast, successToast } from '../../utils/toastify';
+import { errorToast, infoToast, successToast } from '../../../utils/toastify';
 
 /**
  * @name DelegateModal
