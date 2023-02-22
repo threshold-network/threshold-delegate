@@ -1,4 +1,5 @@
-import { Box, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Stack, Text, useColorModeValue, Icon, Center, Tooltip } from '@chakra-ui/react';
+import { BiMessageAltDetail } from 'react-icons/bi';
 
 /**
  * @name DelegatorCard
@@ -21,7 +22,9 @@ const DelegatorCard = ({ delegator, handleClick }) => {
 	const bgColor = useColorModeValue('blackAlpha.50', 'whiteAlpha.50');
 	const borderColor = useColorModeValue('blackAlpha.100', 'whiteAlpha.100');
 	const bgHoverColor = useColorModeValue('rgba(125,0,255,0.2)', 'whiteAlpha.200');
-    const badgedColor = useColorModeValue('blackAlpha.200', '#7D00FF');
+	const badgedColor = useColorModeValue('blackAlpha.200', '#7D00FF');
+
+	const FORUM_LINK = 'https://forum.threshold.network/t/threshold-dao-delegates/325/';
 
 	return (
 		<Stack
@@ -30,26 +33,47 @@ const DelegatorCard = ({ delegator, handleClick }) => {
 			border="1px"
 			borderColor={borderColor}
 			rounded="md"
-			m={2}
-			p={4}
+			m={1}
+			p={2}
 			minW="14rem"
 			bgColor={bgColor}
 			shadow="md"
 			_hover={{ bgColor: bgHoverColor, transition: 'all 0.3s ease-in-out', cursor: 'pointer' }}
-			onClick={() => handleClick(delegator)}
 		>
-			<Text fontWeight="bold" w="100%">
-				{username}
-			</Text>
-			<Text fontSize="sm" pb={2}>{cutAddress}</Text>
-			<Box bgColor={badgedColor} rounded="xl" py={1}>
-				<Text fontSize="sm">
-					<strong>Votes: </strong>
-					{votes}
-				</Text>
+			<Stack direction="column" spacing={0} w="100%" onClick={() => handleClick(delegator)}>
+				<Box>
+					<Text fontWeight="bold" w="100%">
+						{username}
+					</Text>
+					<Text fontSize="sm" pb={2}>
+						{cutAddress}
+					</Text>
+				</Box>
+
+				<Box bgColor={badgedColor} rounded="xl" py={1}>
+					<Text fontSize="sm">
+						<strong>Votes: </strong>
+						{votes}
+					</Text>
+				</Box>
+			</Stack>
+			<Box>
+				<Tooltip label="Go to the forum post" fontSize="sm" hasArrow>
+					<Center mt={2}>
+						<a href={`${FORUM_LINK}${delegator.post_number}`} target="_blank" rel="noreferrer">
+							<Icon as={BiMessageAltDetail} w={6} h={6} color="#7D00FF" />
+						</a>
+					</Center>
+				</Tooltip>
 			</Box>
 		</Stack>
 	);
 };
+
+/*
+<a href={`${FORUM_LINK}${delegator.post_number}`} target="_blank" rel="noreferrer">
+				<Icon as={BiMessageAltDetail} w={6} h={6} color="#7D00FF" />
+			</a>
+			*/
 
 export default DelegatorCard;
