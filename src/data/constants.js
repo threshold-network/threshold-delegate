@@ -5,17 +5,22 @@ import { EthereumClient, modalConnectors, walletConnectProvider } from '@web3mod
 
 import { configureChains, createClient } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
+
+// Smart Contracts ABI
 import T_TOKEN from '../data/t_token.json';
+import T_STAKING from '../data/t_staking.json';
 
 // --------------------------------------
 // CONFIGURACIÓN DEL SMART CONTRACT
 // --------------------------------------
 
 // Address del Smart Contract desplegado en la Blockchain
-export const SC_ADDRESS = '0xCdF7028ceAB81fA0C6971208e83fa7872994beE5';
+export const SC_ADDRESS = '0xCdF7028ceAB81fA0C6971208e83fa7872994beE5'; // T-TOKEN
+export const SC_STAKING_ADDRESS = '0x01B67b1194C75264d06F808A921228a95C765dd7'; // T-STAKING
 
 // ABI del Smart Contract
 export const SC_ABI = T_TOKEN;
+export const SC_STAKING_ABI = T_STAKING;
 
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
