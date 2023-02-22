@@ -1,5 +1,5 @@
-import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
-import DelegatorCard from "../DelegatorCard/DelegatorCard";
+import { Box, Heading, SimpleGrid } from '@chakra-ui/react';
+import DelegatorCard from '../DelegatorCard/DelegatorCard';
 
 /**
  * @name Applicants
@@ -14,9 +14,9 @@ const Applicants = ({ delegators, handleClick }) => {
 	return (
 		<Box>
 			<Heading size="md" mb={2}>
-				Applicants
+				Delegates
 			</Heading>
-			<SimpleGrid columns={[1,2,3,4,5]} maxH="25rem" overflowY="auto" px={6} mb={4}>
+			<SimpleGrid columns={[1, 2, 3, 4, 5]} maxH="25rem" overflowY="auto" px={6} mb={4}>
 				{delegators.map((delegator, index) => (
 					<DelegatorCard key={index} delegator={delegator} handleClick={handleClick} />
 				))}
