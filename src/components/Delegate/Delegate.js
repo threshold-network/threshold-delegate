@@ -109,6 +109,13 @@ const Delegate = ({ address, connector }) => {
                 const totalStakedEther = Number(ethers.utils.formatEther(totalStakedBigInt)).toFixed(0);
                 setStakedBalance(totalStakedEther);
                 setStakedLoaded(true);
+                // Replace totalStaked with parsed totalStakedEther
+                /*
+                stakes.forEach((stake) => {
+                    const aux = BigInt(stake).toString();
+                    stake.totalStaked = Number(ethers.utils.formatEther(aux)).toFixed(0);
+                });
+				*/
                 setStakes(stakes);
             } else {
                 setStakedBalance(0);
@@ -233,7 +240,7 @@ const Delegate = ({ address, connector }) => {
                             borderColor={borderColor}
                             rounded="md"
                             shadow="sm">
-                            <Stats data={data} />
+                            <Stats data={data} stakes={stakes} />
                             {data.delegates !== "loading..." && (
                                 <Applicants delegators={data.delegators} handleClick={handleClick} />
                             )}

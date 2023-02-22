@@ -1,5 +1,7 @@
-import { Box, Text, useColorModeValue } from '@chakra-ui/react';
-import { NULL_ADDRESS } from '../../data/constants';
+import { Box, Center, Select, Text, useColorModeValue } from "@chakra-ui/react";
+import { ethers } from "ethers";
+import { useState } from "react";
+import { NULL_ADDRESS } from "../../data/constants";
 
 /**
  * @name Stats
@@ -12,33 +14,62 @@ import { NULL_ADDRESS } from '../../data/constants';
  * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
  * @version 1.0.0
  */
-const Stats = ({ data }) => {
-	const bgColorTop = useColorModeValue('blackAlpha.200', '#7D00FF');
-	return (
-		<Box bgColor={bgColorTop} p={4} borderTopRadius="md">
-			{data.delegates === NULL_ADDRESS ? (
-				<>
-					<Text>
-						You have {data.balance} <strong>votes</strong>
-					</Text>
-					{/* 
-					<Center>
-						<Select size="sm" mt={2} w="20%">
-							<option value="option1">All</option>
-							<option value="option2">Stake 1</option>
-							<option value="option3">Stake 2</option>
-						</Select>
-					</Center>
-					*/}
-				</>
-			) : (
-				<Text>
-					You have <strong>{data.balance}</strong> votes to <br />
-					<strong>{data.delegates}</strong>
-				</Text>
-			)}
-		</Box>
-	);
+const Stats = ({ data, stakes }) => {
+    const bgColorTop = useColorModeValue("blackAlpha.200", "#7D00FF");
+    const [displayBalance, setDisplayBalance] = useState(data.balance);
+    const [selectedOption, setSelectedOption] = useState("All");
+
+    const handleChange = (e) => {
+        setSelectedOption(e.target.value);
+        if (e.target.value === "All") {
+            setDisplayBalance(data.balance);
+        } else {
+            const stake = stakes.find((stake) => stake.id === e.target.value);
+            const parseBalance = BigInt(stake.totalStaked).toString();
+            // Wei to Ether
+            const etherBalance = Number(ethers.utils.formatEther(parseBalance)).toFixed(0);
+            setDisplayBalance(etherBalance);
+        }
+    };
+
+    return (
+        <Box bgColor={bgColorTop} p={4} borderTopRadius="md">
+            {data.delegates === NULL_ADDRESS ? (
+                <>
+                    <Text>
+                        You have {displayBalance} <strong>votes</strong>
+                    </Text>
+                    {stakes.length > 0 && (
+                        <Center>
+                            <Select
+                                size="sm"
+                                mt={2}
+                                w="20%"
+                                textAlign="center"
+                                value={selectedOption}
+                                onChange={handleChange}>
+                                <option value="All">All</option>
+                                {stakes.map((stake) => {
+                                    const address = stake.id;
+                                    const cutAddress = address.slice(0, 10) + "..." + address.slice(-10);
+                                    return (
+                                        <option key={address} value={address}>
+                                            {cutAddress}
+                                        </option>
+                                    );
+                                })}
+                            </Select>
+                        </Center>
+                    )}
+                </>
+            ) : (
+                <Text>
+                    You have <strong>{data.balance}</strong> votes to <br />
+                    <strong>{data.delegates}</strong>
+                </Text>
+            )}
+        </Box>
+    );
 };
 
 export default Stats;
