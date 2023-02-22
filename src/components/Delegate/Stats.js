@@ -17,9 +17,20 @@ const Stats = ({ data }) => {
 	return (
 		<Box bgColor={bgColorTop} p={4} borderTopRadius="md">
 			{data.delegates === NULL_ADDRESS ? (
-				<Text>
-					You have {data.balance} <strong>undelegated votes</strong>
-				</Text>
+				<>
+					<Text>
+						You have {data.balance} <strong>votes</strong>
+					</Text>
+					{/* 
+					<Center>
+						<Select size="sm" mt={2} w="20%">
+							<option value="option1">All</option>
+							<option value="option2">Stake 1</option>
+							<option value="option3">Stake 2</option>
+						</Select>
+					</Center>
+					*/}
+				</>
 			) : (
 				<Text>
 					You have <strong>{data.balance}</strong> votes to <br />
