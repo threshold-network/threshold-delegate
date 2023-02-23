@@ -1,3 +1,4 @@
+// React
 import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 
@@ -12,8 +13,15 @@ import Home from './pages/Home/Home';
 import { Web3Modal } from '@web3modal/react';
 import { WagmiConfig } from 'wagmi';
 
+// Styles
 import './App.css';
 
+
+/**
+ * @description Renders the whole app.
+ * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
+ * @version 1.0.0
+ */
 function App() {
 	return (
 		<>

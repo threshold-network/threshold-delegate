@@ -1,25 +1,37 @@
-import React from 'react';
-import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react';
-import { FaMoon, FaSun } from 'react-icons/fa';
+// React
+import React from "react";
 
-const ColorModeSwitcher = props => {
-  const { toggleColorMode } = useColorMode();
-  const text = useColorModeValue('dark', 'light');
-  const SwitchIcon = useColorModeValue(FaMoon, FaSun);
+// Chakra UI
+import { useColorMode, useColorModeValue, IconButton } from "@chakra-ui/react";
 
-  return (
-    <IconButton
-      size="md"
-      fontSize="lg"
-      aria-label={`Switch to ${text} mode`}
-      variant="ghost"
-      color="current"
-      marginLeft="2"
-      onClick={toggleColorMode}
-      icon={<SwitchIcon />}
-      {...props}
-    />
-  );
+// React Icons
+import { FaMoon, FaSun } from "react-icons/fa";
+
+/**
+ * @name ColorModeSwitcher
+ * @description ColorModeSwitcher component that allows the user to switch between light and dark mode.
+ * @dev This component is used in the Header component.
+ * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
+ * @version 1.0.0
+ */
+const ColorModeSwitcher = (props) => {
+    const { toggleColorMode } = useColorMode();
+    const text = useColorModeValue("dark", "light");
+    const SwitchIcon = useColorModeValue(FaMoon, FaSun);
+
+    return (
+        <IconButton
+            size="md"
+            fontSize="lg"
+            aria-label={`Switch to ${text} mode`}
+            variant="ghost"
+            color="current"
+            marginLeft="2"
+            onClick={toggleColorMode}
+            icon={<SwitchIcon />}
+            {...props}
+        />
+    );
 };
 
 export default ColorModeSwitcher;

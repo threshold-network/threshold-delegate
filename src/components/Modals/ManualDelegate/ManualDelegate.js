@@ -1,3 +1,4 @@
+// React
 import { useState } from "react";
 
 // Utils
@@ -21,14 +22,16 @@ import {
     useColorModeValue,
     useToast,
 } from "@chakra-ui/react";
+
+// Utils
 import { errorToast, infoToast, successToast } from "../../../utils/toastify";
 
 /**
  * @name ManualDelegate
- * @description DelegateModal component that confirms the delegation of votes.
+ * @description ManualDelegate component that allows the user to delegate votes to another address.
  * @dev This component is used in the Delegate component.
- * @param {function} onClose - The onClose function.
- * @param {boolean} isOpen - The isOpen boolean.
+ * @param {function} onClose - Function to close the modal.
+ * @param {boolean} isOpen - Check if the modal is open.
  * @param {string} address - The user's address.
  * @param {object} contract - The contract object.
  * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES

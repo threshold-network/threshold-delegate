@@ -14,10 +14,12 @@ import { NULL_ADDRESS } from "../../data/constants";
  * @version 1.0.0
  */
 const Stats = ({ data, stakes }) => {
+    // ------------------------------ Chakra UI ------------------------------ //
     const bgColorTop = useColorModeValue("blackAlpha.200", "#7D00FF");
     const [displayBalance, setDisplayBalance] = useState(data.balance);
     const [selectedOption, setSelectedOption] = useState("All");
 
+    // -------------------------- Handle functions --------------------------- //
     const handleChange = (e) => {
         setSelectedOption(e.target.value);
         if (e.target.value === "All") {
@@ -28,6 +30,7 @@ const Stats = ({ data, stakes }) => {
         }
     };
 
+    // ------------------------------ Render --------------------------------- //
     return (
         <Box bgColor={bgColorTop} p={4} borderTopRadius="md">
             {data.delegates === NULL_ADDRESS ? (

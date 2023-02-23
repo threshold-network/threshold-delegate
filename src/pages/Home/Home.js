@@ -1,5 +1,7 @@
+// Utils
 import { useAccount } from 'wagmi';
 
+// Components
 import Delegate from '../../components/Delegate/Delegate';
 import NotConnected from '../NotConnected/NotConnected';
 
