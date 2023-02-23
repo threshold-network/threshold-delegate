@@ -4,7 +4,7 @@ import { BiMessageAltDetail } from 'react-icons/bi';
 /**
  * @name DelegatorCard
  * @description DelegatorCard component that displays the delegator's data.
- * @dev This component is used in the Applicants component.
+ * @dev This component is used in the Delegates component.
  * @param {object} delegator - The delegator.
  * @param {string} delegator.username - The delegator's username.
  * @param {string} delegator.address - The delegator's address.

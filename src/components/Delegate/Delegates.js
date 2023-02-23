@@ -2,15 +2,15 @@ import { Box, Heading, SimpleGrid } from '@chakra-ui/react';
 import DelegatorCard from '../DelegatorCard/DelegatorCard';
 
 /**
- * @name Applicants
- * @description Applicants component that displays the applicants to the delegate.
+ * @name Delegates
+ * @description Delegates component that displays the Delegates to the delegate.
  * @dev This component is used in the Delegate component.
  * @param {object} delegators - The delegators.
  * @param {function} handleClick - The handleClick function.
  * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
  * @version 1.0.0
  */
-const Applicants = ({ delegators, handleClick }) => {
+const Delegates = ({ delegators, handleClick }) => {
 	return (
 		<Box>
 			<Heading size="md" mb={2}>
@@ -25,4 +25,4 @@ const Applicants = ({ delegators, handleClick }) => {
 	);
 };
 
-export default Applicants;
+export default Delegates;

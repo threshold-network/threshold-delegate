@@ -38,7 +38,7 @@ const Footer = () => {
 				align={{ base: 'center', md: 'center' }}
 			>
 				<Image src="/images/logo.svg" width="10%" alt="logo" filter={useColorModeValue('invert(1)', '')} />
-				<Text>© 2023 Treshold Network. All rights reserved</Text>
+				<Text>© 2023 Threshold Network. All rights reserved</Text>
 				<Stack direction={'row'} spacing={6}>
 					<SocialButton label={'Twitter'} href={'#'}>
 						<FaTwitter />

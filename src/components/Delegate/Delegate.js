@@ -12,7 +12,7 @@ import { SC_ABI, SC_ADDRESS, SC_STAKING_ABI, SC_STAKING_ADDRESS } from "../../da
 import post from "../../data/325.json";
 
 // Components
-import Applicants from "./Applicants";
+import Delegates from "./Delegates";
 import Stats from "./Stats";
 
 // Modal
@@ -72,15 +72,15 @@ const Delegate = ({ address, connector }) => {
     const lowerCaseAddress = address.toLowerCase();
 
     const QUERY = gql`
-		{
-			account(id: "${lowerCaseAddress}") {
-				stakes {
-					totalStaked
-					id
-				}
-			}
-		}
-	`;
+        {
+            account(id: "${lowerCaseAddress}") {
+                stakes {
+                    totalStaked
+                    id
+                }
+            }
+        }
+    `;
 
     const { data: dataQuery, loading: loadingQuery } = useQuery(QUERY);
 
@@ -100,6 +100,7 @@ const Delegate = ({ address, connector }) => {
     useEffect(() => {
         const calculateStaking = async () => {
             if (dataQuery !== undefined && dataQuery.account && dataQuery.account.stakes.length > 0) {
+                // Create new array with the stakes
                 const stakes = dataQuery.account.stakes;
                 // Sum all the stakes
                 const totalStaked = stakes.reduce((acc, stake) => acc + Number(stake.totalStaked), 0);
@@ -107,20 +108,22 @@ const Delegate = ({ address, connector }) => {
                 const totalStakedBigInt = BigInt(totalStaked).toString();
                 // Stake to ether
                 const totalStakedEther = Number(ethers.utils.formatEther(totalStakedBigInt)).toFixed(0);
+                // Convert foreach stake to ether
+                const auxStakes = [];
+                stakes.forEach((stake) => {
+                    const stakeBigInt = BigInt(stake.totalStaked).toString();
+                    const stakeEther = Number(ethers.utils.formatEther(stakeBigInt)).toFixed(0);
+                    auxStakes.push({ idStake: stake.id, totalStaked: stakeEther });
+                });
                 setStakedBalance(totalStakedEther);
                 setStakedLoaded(true);
-                // Replace totalStaked with parsed totalStakedEther
-                /*
-                stakes.forEach((stake) => {
-                    const aux = BigInt(stake).toString();
-                    stake.totalStaked = Number(ethers.utils.formatEther(aux)).toFixed(0);
-                });
-				*/
-                setStakes(stakes);
+                setStakes(auxStakes);
+                console.log("🚀 ~ file: Delegate.js:126 ~ calculateStaking ~ auxStakes:", auxStakes)
             } else {
                 setStakedBalance(0);
                 setStakedLoaded(true);
             }
+                
         };
         calculateStaking();
     }, [dataQuery, loadingQuery]);
@@ -242,7 +245,7 @@ const Delegate = ({ address, connector }) => {
                             shadow="sm">
                             <Stats data={data} stakes={stakes} />
                             {data.delegates !== "loading..." && (
-                                <Applicants delegators={data.delegators} handleClick={handleClick} />
+                                <Delegates delegators={data.delegators} handleClick={handleClick} />
                             )}
                         </Stack>
                     )}

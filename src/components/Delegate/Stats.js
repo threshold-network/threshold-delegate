@@ -1,5 +1,4 @@
 import { Box, Center, Select, Text, useColorModeValue } from "@chakra-ui/react";
-import { ethers } from "ethers";
 import { useState } from "react";
 import { NULL_ADDRESS } from "../../data/constants";
 
@@ -24,11 +23,8 @@ const Stats = ({ data, stakes }) => {
         if (e.target.value === "All") {
             setDisplayBalance(data.balance);
         } else {
-            const stake = stakes.find((stake) => stake.id === e.target.value);
-            const parseBalance = BigInt(stake.totalStaked).toString();
-            // Wei to Ether
-            const etherBalance = Number(ethers.utils.formatEther(parseBalance)).toFixed(0);
-            setDisplayBalance(etherBalance);
+            const stake = stakes.find((stake) => stake.idStake === e.target.value);
+            setDisplayBalance(stake.totalStaked);
         }
     };
 
@@ -48,13 +44,15 @@ const Stats = ({ data, stakes }) => {
                                 textAlign="center"
                                 value={selectedOption}
                                 onChange={handleChange}>
-                                <option value="All">All</option>
+                                <option value="All">All | Balance {data.balance}</option>
+                                <option value="Balance">Liquid | Balance: 0</option>
                                 {stakes.map((stake) => {
-                                    const address = stake.id;
-                                    const cutAddress = address.slice(0, 10) + "..." + address.slice(-10);
+                                    const address = stake.idStake;
+                                    const cutAddress = address.slice(0, 6) + "..." + address.slice(-4);
+                                    const totalStaked = stake.totalStaked;
                                     return (
                                         <option key={address} value={address}>
-                                            {cutAddress}
+                                            ID: {cutAddress} | Balance: {totalStaked}
                                         </option>
                                     );
                                 })}
