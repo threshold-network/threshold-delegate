@@ -1,10 +1,12 @@
+// React
 import { useEffect, useState } from "react";
+
+// Chakra UI
 import { Box, Button, Center, Heading, Spinner, Stack, Text, useColorModeValue, useDisclosure } from "@chakra-ui/react";
-import { useContract } from "wagmi";
 
 // Utils
 import { ethers } from "ethers";
-import { useDisconnect } from "wagmi";
+import { useDisconnect, useContract } from "wagmi";
 import { useQuery, gql } from "@apollo/client";
 
 // Data
@@ -118,12 +120,10 @@ const Delegate = ({ address, connector }) => {
                 setStakedBalance(totalStakedEther);
                 setStakedLoaded(true);
                 setStakes(auxStakes);
-                console.log("🚀 ~ file: Delegate.js:126 ~ calculateStaking ~ auxStakes:", auxStakes)
             } else {
                 setStakedBalance(0);
                 setStakedLoaded(true);
             }
-                
         };
         calculateStaking();
     }, [dataQuery, loadingQuery]);
