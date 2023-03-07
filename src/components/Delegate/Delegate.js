@@ -37,6 +37,7 @@ const Delegate = ({ address, connector }) => {
     const [loading, setLoading] = useState(false); // Loading state
     const [needReload, setNeedReload] = useState(true); // Need reload state
     const [firstLoad, setFirstLoad] = useState(true); // First load state
+    const [selectedStake, setSelectedStake] = useState(null); // Selected stake to delegate to
 
     // ------------------ DATA ---------------------
     const [data, setData] = useState({
@@ -76,7 +77,7 @@ const Delegate = ({ address, connector }) => {
     // 0x5cf1703a1c99a4b42eb056535840e93118177232
     const QUERY = gql`
         {
-            account(id: "${lowerCaseAddress}") {
+            account(id: "0x5cf1703a1c99a4b42eb056535840e93118177232") {
                 stakes {
                     totalStaked
                     id
@@ -255,7 +256,7 @@ const Delegate = ({ address, connector }) => {
                             borderColor={borderColor}
                             rounded="md"
                             shadow="sm">
-                            <Stats data={data} stakes={stakes} />
+                            <Stats data={data} stakes={stakes} setSelectedStake={setSelectedStake} />
                             {data.delegates !== "loading..." && (
                                 <Delegates delegators={data.delegators} handleClick={handleClick} />
                             )}
@@ -279,11 +280,18 @@ const Delegate = ({ address, connector }) => {
                     isOpen={isOpen}
                     onClose={onClose}
                     selectedUser={selectedUser}
-                    balance={data.balance}
-                    contract={signedTContract}
+                    balance={selectedStake ? selectedStake.totalStaked : data.balance}
+                    contract={selectedStake ? signedTStaking : signedTContract}
                 />
             )}
-            <ManualDelegate isOpen={isOpenManual} onClose={onCloseManual} address={address} contract={signedTStaking} />
+            {isOpenManual && (
+                <ManualDelegate
+                    isOpen={isOpenManual}
+                    onClose={onCloseManual}
+                    address={address}
+                    contract={selectedStake ? signedTStaking : signedTContract}
+                />
+            )}
         </>
     );
 };

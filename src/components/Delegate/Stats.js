@@ -13,21 +13,20 @@ import { NULL_ADDRESS } from "../../data/constants";
  * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
  * @version 1.0.0
  */
-const Stats = ({ data, stakes }) => {
+const Stats = ({ data, stakes, setSelectedStake }) => {
     // ------------------------------ Chakra UI ------------------------------ //
     const bgColorTop = useColorModeValue("blackAlpha.200", "#7D00FF");
-    const [displayBalance, setDisplayBalance] = useState(data.balance);
     const [selectedOption, setSelectedOption] = useState("All");
 
     // -------------------------- Handle functions --------------------------- //
     const allBalance = data.balance + data.stakedBalance;
     const handleChange = (e) => {
-        setSelectedOption(e.target.value);
-        if (e.target.value === "Balance") {
-            setDisplayBalance(data.balance);
-        } else {
-            const stake = stakes.find((stake) => stake.idStake === e.target.value);
-            setDisplayBalance(stake.totalStaked);
+        const value = e.target.value;
+        setSelectedOption(value);
+        if (value === "Balance") setSelectedStake(null);
+        else {
+            const stake = stakes.find((stake) => stake.idStake === value);
+            setSelectedStake(stake);
         }
     };
 
@@ -49,7 +48,7 @@ const Stats = ({ data, stakes }) => {
                         value={selectedOption}
                         onChange={handleChange}
                         w={["80%", "70%", "40%"]}
-                        placeholder="">
+                        placeholder="-- Select to delegate --">
                         <option value="Balance">Liquid | Balance: {data.balance}</option>
                         {stakes.map((stake) => {
                             const address = stake.idStake;
