@@ -10,7 +10,7 @@ import { useDisconnect, useContract } from "wagmi";
 import { useQuery, gql } from "@apollo/client";
 
 // Data
-import { SC_ABI, SC_ADDRESS, SC_STAKING_ABI, SC_STAKING_ADDRESS } from "../../data/constants";
+import { NULL_ADDRESS, SC_ABI, SC_ADDRESS, SC_STAKING_ABI, SC_STAKING_ADDRESS } from "../../data/constants";
 import post from "../../data/325.json";
 
 // Components
@@ -41,6 +41,7 @@ const Delegate = ({ address, connector }) => {
     // ------------------ DATA ---------------------
     const [data, setData] = useState({
         balance: 0,
+        stakedBalance: 0,
         votes: 0,
         delegates: "loading...",
         delegators: [],
@@ -72,13 +73,16 @@ const Delegate = ({ address, connector }) => {
 
     // ------------------ GRAPHQL ------------------
     const lowerCaseAddress = address.toLowerCase();
-
+    // 0x5cf1703a1c99a4b42eb056535840e93118177232
     const QUERY = gql`
         {
             account(id: "${lowerCaseAddress}") {
                 stakes {
                     totalStaked
                     id
+                    delegatee {
+                        id
+                    }
                 }
             }
         }
@@ -115,11 +119,16 @@ const Delegate = ({ address, connector }) => {
                 stakes.forEach((stake) => {
                     const stakeBigInt = BigInt(stake.totalStaked).toString();
                     const stakeEther = Number(ethers.utils.formatEther(stakeBigInt)).toFixed(0);
-                    auxStakes.push({ idStake: stake.id, totalStaked: stakeEther });
+                    const delegatee = stake.delegatee?.id;
+                    // Buscar 0x y coger los 42 siguientes
+                    const delegateeAddress = delegatee?.match(/0x[a-fA-F0-9]{40}/g)[0] || NULL_ADDRESS;
+                    auxStakes.push({ idStake: stake.id, totalStaked: stakeEther, delegatee: delegateeAddress });
                 });
+
                 setStakedBalance(totalStakedEther);
                 setStakedLoaded(true);
                 setStakes(auxStakes);
+                console.log("🚀 ~ file: Delegate.js:131 ~ calculateStaking ~ auxStakes:", auxStakes);
             } else {
                 setStakedBalance(0);
                 setStakedLoaded(true);
@@ -178,20 +187,23 @@ const Delegate = ({ address, connector }) => {
                 let balanceFixed = ethers.utils.formatEther(balance);
                 balanceFixed = Number(balanceFixed).toFixed(2);
 
-                // Sum the balance with the staked balance
-                const totalBalance = Number(balanceFixed) + Number(stakedBalance);
+                // Convert to number
+                const totalBalance = Number(balanceFixed);
+                const totalStakedBalance = Number(stakedBalance);
 
+                // Set the data
                 setData({
                     balance: totalBalance,
+                    stakedBalance: totalStakedBalance,
                     delegates,
                     delegators,
                 });
                 setSignedTContract(signedTContract);
                 setSignedTStaking(signedTStaking);
-                if (firstLoad) setFirstLoad(false);
             } catch (error) {
                 console.error(error);
             } finally {
+                if (firstLoad) setFirstLoad(false);
                 setLoading(false);
                 setNeedReload(false);
             }
