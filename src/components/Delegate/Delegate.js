@@ -77,7 +77,7 @@ const Delegate = ({ address, connector }) => {
     // 0x5cf1703a1c99a4b42eb056535840e93118177232
     const QUERY = gql`
         {
-            account(id: "0x5cf1703a1c99a4b42eb056535840e93118177232") {
+            account(id: "${lowerCaseAddress}") {
                 stakes {
                     totalStaked
                     id
