@@ -10,8 +10,6 @@ import { NULL_ADDRESS } from "../../data/constants";
  * @param {number} data.balance - The user's balance.
  * @param {number} data.votes - The user's votes.
  * @param {string} data.delegates - The user's delegates.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
 const Stats = ({ data, stakes, setSelectedStake }) => {
     // ------------------------------ Chakra UI ------------------------------ //
@@ -19,7 +17,6 @@ const Stats = ({ data, stakes, setSelectedStake }) => {
     const [selectedOption, setSelectedOption] = useState("All");
 
     // -------------------------- Handle functions --------------------------- //
-    const allBalance = data.balance + data.stakedBalance;
     const handleChange = (e) => {
         const value = e.target.value;
         setSelectedOption(value);
@@ -37,32 +34,37 @@ const Stats = ({ data, stakes, setSelectedStake }) => {
     return (
         <Box bgColor={bgColorTop} p={4} borderTopRadius="md">
             <Text>
-                You have {allBalance} <strong>votes</strong> in total. {haveStakes && "(Liquid + Staked)"}
+                You have {data.balance} liquid T <strong>votes</strong> to delegate.
             </Text>
-            {haveStakes && (
-                <Center>
-                    <Select
-                        size="sm"
-                        mt={2}
-                        textAlign="center"
-                        value={selectedOption}
-                        onChange={handleChange}
-                        w={["80%", "70%", "40%"]}
-                        placeholder="-- Select to delegate --">
-                        <option value="Balance">Liquid | Balance: {data.balance}</option>
-                        {stakes.map((stake) => {
-                            const address = stake.idStake;
-                            const cutAddress = address.slice(0, 6) + "..." + address.slice(-4);
-                            const totalStaked = stake.totalStaked;
-                            return (
-                                <option key={address} value={address}>
-                                    ID: {cutAddress} | Balance: {totalStaked}
-                                </option>
-                            );
-                        })}
-                    </Select>
-                </Center>
-            )}
+            {haveStakes &&
+                <>
+                    <Text>
+                        You have {data.stakedBalance} staked T <strong>votes</strong> to delegate.
+                    </Text>
+                    <Center>
+                        <Select
+                            size="sm"
+                            mt={2}
+                            textAlign="center"
+                            value={selectedOption}
+                            onChange={handleChange}
+                            w={["80%", "70%", "40%"]}
+                            placeholder="-- Select to delegate --">
+                            <option value="Balance">Liquid | Balance: {data.balance}</option>
+                            {stakes.map((stake) => {
+                                const address = stake.idStake;
+                                const cutAddress = address.slice(0, 6) + "..." + address.slice(-4);
+                                const totalStaked = stake.totalStaked;
+                                return (
+                                    <option key={address} value={address}>
+                                        ID: {cutAddress} | Balance: {totalStaked}
+                                    </option>
+                                );
+                            })}
+                        </Select>
+                    </Center>
+                </>
+            }
             <Center mt={2} w="100%">
                 <SimpleGrid minChildWidth="125px" spacing={4} w="100%">
                     <Center>

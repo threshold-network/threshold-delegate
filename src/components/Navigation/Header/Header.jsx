@@ -7,8 +7,6 @@ import ColorModeSwitcher from "../../ColorModeSwitcher/ColorModeSwitcher";
 /**
  * @name Header
  * @description Header component that displays the header of the app.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
 const Header = () => {
     // Needed to invert the logo when the color mode is dark

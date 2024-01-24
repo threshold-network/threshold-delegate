@@ -10,8 +10,6 @@ import { BiMessageAltDetail } from 'react-icons/bi';
  * @param {string} delegator.address - The delegator's address.
  * @param {number} delegator.votes - The delegator's votes.
  * @param {function} handleClick - The handleClick function.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
 const DelegatorCard = ({ delegator, handleClick }) => {
 	const { username, address, votes } = delegator;
