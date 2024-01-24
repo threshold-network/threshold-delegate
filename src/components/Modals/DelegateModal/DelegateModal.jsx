@@ -15,6 +15,7 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { errorToast, infoToast, successToast } from '../../../utils/toastify';
+import { useConnectWallet } from '@web3-onboard/react';
 
 /**
  * @name DelegateModal
@@ -27,16 +28,19 @@ import { errorToast, infoToast, successToast } from '../../../utils/toastify';
  * @param {string} selectedUser.name - The selectedUser's name.
  * @param {number} balance - The user's balance.
  * @param {object} contract - The contract object.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
-const DelegateModal = ({ onClose, isOpen, selectedUser, balance, contract }) => {
+const DelegateModal = ({ onClose, isOpen, selectedUser, balance, tContract, stakedContract }) => {
+	const [{ wallet }] = useConnectWallet();
+	const lowerCaseAccountAddress = wallet.accounts[0].address.toLowerCase();
+	
 	const bgColor = useColorModeValue('blackAlpha.200', 'whiteAlpha.200');
 	const toast = useToast();
 
 	const handleDelegate = async () => {
 		try {
-			const tx = await contract.delegate(selectedUser.address);
+			const tx = tContract 
+				? await tContract.delegate(selectedUser.address) 
+				: await stakedContract.delegateVoting(lowerCaseAccountAddress, selectedUser.address) 
 			infoToast('Transaction sent', 'Please wait for the transaction', toast);
 			onClose();
 			await tx.wait();

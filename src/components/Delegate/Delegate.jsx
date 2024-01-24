@@ -6,11 +6,9 @@ import { Box, Button, Center, Heading, Spinner, Stack, Text, useColorModeValue, 
 
 // Utils
 import { ethers } from "ethers";
-import { useDisconnect, useContract } from "wagmi";
-import { useQuery, gql } from "@apollo/client";
 
 // Data
-import { NULL_ADDRESS, SC_ABI, SC_ADDRESS, SC_STAKING_ABI, SC_STAKING_ADDRESS } from "../../data/constants";
+import { API_URL, NULL_ADDRESS, SC_ABI, SC_ADDRESS, SC_STAKING_ABI, SC_STAKING_ADDRESS } from "../../data/constants";
 import post from "../../data/325.json";
 
 // Components
@@ -20,6 +18,9 @@ import Stats from "./Stats";
 // Modal
 import DelegateModal from "../Modals/DelegateModal/DelegateModal";
 import ManualDelegate from "../Modals/ManualDelegate/ManualDelegate";
+import axios from "axios";
+import { useContract } from "../../hooks/useContract";
+import { useConnectWallet } from "@web3-onboard/react";
 
 /**
  * @name Delegate
@@ -27,11 +28,11 @@ import ManualDelegate from "../Modals/ManualDelegate/ManualDelegate";
  * @dev This component is used in the Home component.
  * @param {string} address - The user's address.
  * @param {object} connector - The user's connector.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
 
-const Delegate = ({ address, connector }) => {
+const Delegate = ({ provider, address, signer, setAccount }) => {
+    const [{ wallet }] = useConnectWallet();
+    
     // ------------------ STATES -------------------
     const [selectedUser, setSelectedUser] = useState(null); // Selected user to delegate to
     const [loading, setLoading] = useState(false); // Loading state
@@ -57,26 +58,27 @@ const Delegate = ({ address, connector }) => {
     const [signedTStaking, setSignedTStaking] = useState(null);
 
     const contract = useContract({
-        address: SC_ADDRESS,
-        abi: SC_ABI,
-    });
+        contractAddress: SC_ADDRESS,
+        contractAbi: SC_ABI,
+        provider: provider
+    })
 
     const stakingContract = useContract({
-        address: SC_STAKING_ADDRESS,
-        abi: SC_STAKING_ABI,
+        contractAddress: SC_STAKING_ADDRESS,
+        contractAbi: SC_STAKING_ABI,
+        provider: provider
     });
 
     // ------------------ STAKING ------------------
     const [stakes, setStakes] = useState([]);
     const [stakedBalance, setStakedBalance] = useState(0);
     const [stakedLoaded, setStakedLoaded] = useState(false);
-    const { disconnect } = useDisconnect();
 
     // ------------------ GRAPHQL ------------------
     const lowerCaseAddress = address.toLowerCase();
     // 0x5cf1703a1c99a4b42eb056535840e93118177232
-    const QUERY = gql`
-        {
+    const QUERY = `
+        query {
             account(id: "${lowerCaseAddress}") {
                 stakes {
                     totalStaked
@@ -89,8 +91,6 @@ const Delegate = ({ address, connector }) => {
         }
     `;
 
-    const { data: dataQuery, loading: loadingQuery } = useQuery(QUERY);
-
     // ------------------ HANDLERS ------------------
     // Handle click on a delegator
     const handleClick = (delegator) => {
@@ -102,10 +102,23 @@ const Delegate = ({ address, connector }) => {
         onOpenManual();
     };
 
+    const handleDisconnectWallet = async () => {
+        setAccount(undefined)
+    }
+
     // ------------------ EFFECTS -------------------
 
     useEffect(() => {
         const calculateStaking = async () => {
+            const response = await axios.post(API_URL, {
+                query: QUERY
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const dataQuery = response.data.dataQuery
+
             if (dataQuery !== undefined && dataQuery.account && dataQuery.account.stakes.length > 0) {
                 // Create new array with the stakes
                 const stakes = dataQuery.account.stakes;
@@ -136,14 +149,13 @@ const Delegate = ({ address, connector }) => {
             }
         };
         calculateStaking();
-    }, [dataQuery, loadingQuery]);
+    }, [QUERY]);
 
     useEffect(() => {
         const getData = async () => {
             setLoading(true);
 
             try {
-                const signer = await connector.getSigner();
                 const signedTContract = contract.connect(signer);
                 const signedTStaking = stakingContract.connect(signer);
                 const [balance, delegates] = await Promise.all([
@@ -210,8 +222,8 @@ const Delegate = ({ address, connector }) => {
             }
         };
 
-        needReload && stakedLoaded && !loading && connector && getData();
-    }, [address, connector, contract, loading, needReload, firstLoad, stakedLoaded, stakedBalance, stakingContract]);
+        needReload && stakedLoaded && !loading && getData();
+    }, [address, contract, signer, loading, needReload, firstLoad, stakedLoaded, stakedBalance, stakingContract]);
 
     useEffect(() => {
         const reloadData = async () => {
@@ -268,7 +280,9 @@ const Delegate = ({ address, connector }) => {
                             <Button variant="ghost" onClick={handleManualDelegation}>
                                 Custom delegate
                             </Button>
-                            <Button variant="ghost" onClick={disconnect}>
+                            <Button variant="ghost"  onClick={() => {
+                                handleDisconnectWallet(wallet);
+                            }}>
                                 Disconnect
                             </Button>
                         </Stack>
@@ -281,7 +295,8 @@ const Delegate = ({ address, connector }) => {
                     onClose={onClose}
                     selectedUser={selectedUser}
                     balance={selectedStake ? selectedStake.totalStaked : data.balance}
-                    contract={selectedStake ? signedTStaking : signedTContract}
+                    tContract={selectedStake ? undefined : signedTContract}
+                    stakedContract={selectedStake ? signedTStaking : undefined}
                 />
             )}
             {isOpenManual && (
@@ -289,7 +304,8 @@ const Delegate = ({ address, connector }) => {
                     isOpen={isOpenManual}
                     onClose={onCloseManual}
                     address={address}
-                    contract={selectedStake ? signedTStaking : signedTContract}
+                    tContract={selectedStake ? undefined : signedTContract}
+                    stakedContract={selectedStake ? signedTStaking : undefined}
                 />
             )}
         </>

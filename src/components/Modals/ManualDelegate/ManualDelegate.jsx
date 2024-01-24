@@ -34,10 +34,8 @@ import { errorToast, infoToast, successToast } from "../../../utils/toastify";
  * @param {boolean} isOpen - Check if the modal is open.
  * @param {string} address - The user's address.
  * @param {object} contract - The contract object.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
-const ManualDelegate = ({ onClose, isOpen, address, contract }) => {
+const ManualDelegate = ({ onClose, isOpen, address, tContract, stakedContract }) => {
     // ------------------------------ Chakra UI ------------------------------ //
     const bgColor = useColorModeValue("blackAlpha.200", "whiteAlpha.200");
     const toast = useToast();
@@ -76,7 +74,9 @@ const ManualDelegate = ({ onClose, isOpen, address, contract }) => {
     const handleDelegate = async () => {
         if (!isValidAddress) return;
         try {
-            const tx = await contract.delegate(delegateAddress);
+			const tx = tContract 
+				? await tContract.delegate(delegateAddress) 
+				: await stakedContract.delegateVoting(address.toLowerCase(), delegateAddress) 
             infoToast("Transaction sent", "Please wait for the transaction", toast);
             onClose();
             await tx.wait();
