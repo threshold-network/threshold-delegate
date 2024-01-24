@@ -117,7 +117,7 @@ const Delegate = ({ provider, address, signer, setAccount }) => {
                     'Content-Type': 'application/json'
                 }
             });
-            const dataQuery = response.data.dataQuery
+            const dataQuery = response.data.data
 
             if (dataQuery !== undefined && dataQuery.account && dataQuery.account.stakes.length > 0) {
                 // Create new array with the stakes
@@ -293,6 +293,7 @@ const Delegate = ({ provider, address, signer, setAccount }) => {
                 <DelegateModal
                     isOpen={isOpen}
                     onClose={onClose}
+                    address={address}
                     selectedUser={selectedUser}
                     balance={selectedStake ? selectedStake.totalStaked : data.balance}
                     tContract={selectedStake ? undefined : signedTContract}

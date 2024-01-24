@@ -29,9 +29,8 @@ import { useConnectWallet } from '@web3-onboard/react';
  * @param {number} balance - The user's balance.
  * @param {object} contract - The contract object.
  */
-const DelegateModal = ({ onClose, isOpen, selectedUser, balance, tContract, stakedContract }) => {
-	const [{ wallet }] = useConnectWallet();
-	const lowerCaseAccountAddress = wallet.accounts[0].address.toLowerCase();
+const DelegateModal = ({ onClose, isOpen, address, selectedUser, balance, tContract, stakedContract }) => {
+	const lowerCaseAccountAddress = address.toLowerCase();
 	
 	const bgColor = useColorModeValue('blackAlpha.200', 'whiteAlpha.200');
 	const toast = useToast();
