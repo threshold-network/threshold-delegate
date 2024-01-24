@@ -36,8 +36,6 @@ const SocialButton = ({ children, label, href }) => {
  * @name Footer
  * @description Footer component that displays the footer of the app.
  * @dev This component is used in the Layout component.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
 const Footer = () => {
     return (
