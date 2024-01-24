@@ -15,7 +15,6 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { errorToast, infoToast, successToast } from '../../../utils/toastify';
-import { useConnectWallet } from '@web3-onboard/react';
 
 /**
  * @name DelegateModal
