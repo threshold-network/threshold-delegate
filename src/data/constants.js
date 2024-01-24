@@ -1,11 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
-import { EthereumClient, modalConnectors, walletConnectProvider } from '@web3modal/ethereum';
-
-import { configureChains, createClient } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
-
 // Smart Contracts ABI
 import T_TOKEN from '../data/t_token.json';
 import T_STAKING from '../data/t_staking.json';
@@ -13,6 +8,8 @@ import T_STAKING from '../data/t_staking.json';
 // --------------------------------------
 // CONFIGURACIÓN DEL SMART CONTRACT
 // --------------------------------------
+
+export const API_URL = "https://api.studio.thegraph.com/query/24143/main-threshold-subgraph/0.0.7"
 
 // Address del Smart Contract desplegado en la Blockchain
 export const SC_ADDRESS = '0xCdF7028ceAB81fA0C6971208e83fa7872994beE5'; // T-TOKEN
@@ -35,20 +32,6 @@ export const NetworkDetails = {
 // ----------------------------------------------------------------
 // --------------------- web3Modal Configuration ------------------
 // ----------------------------------------------------------------
-
-export const projectId = 'a6eab982737176333310b830422f0582';
-const chains = [mainnet];
-
-// Wagmi client
-const { provider } = configureChains(chains, [walletConnectProvider({ projectId: projectId })]);
-
-export const WAGMI_CLIENT = createClient({
-	autoConnect: true,
-	connectors: modalConnectors({ appName: 'Threshold delegate', chains }),
-	provider,
-});
-
-export const ETHEREUM_CLIENT = new EthereumClient(WAGMI_CLIENT, chains);
 
 export const WEB3MODAL_CONFIG = {
 	theme: 'dark',

@@ -1,20 +1,24 @@
 import { Box, Button, Center, Text } from '@chakra-ui/react';
-import { useWeb3Modal } from '@web3modal/react';
 import Footer from '../../components/Navigation/Footer/Footer';
+import { useConnectWallet } from '@web3-onboard/react';
 
-/**
- * @name NotConnected
- * @description Displays a message to the user to connect their wallet.
- * @dev This component is used in the Home component.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
- */
-const NotConnected = () => {
-	const { isOpen, open } = useWeb3Modal();
+const NotConnected = ({ setAccount }) => {
+	const [{ wallet, connecting }, connect ] = useConnectWallet();
+
+	const { name, avatar } = wallet?.accounts[0].ens ?? {}
+	const account = {
+		chainId: 1,
+		address: wallet?.accounts[0].address,
+		ens: { name, avatar: avatar?.url }
+	}
 
 	// Handle login with useWeb3Modal
 	const handleConnect = () => {
-		open();
+		connect()
+
+		if (account) {
+			setAccount(account)
+		}
 	};
 
 	return (
@@ -29,7 +33,7 @@ const NotConnected = () => {
 						mt={4}
 						onClick={handleConnect}
 					>
-						{!isOpen ? 'Connect wallet' : 'Connecting...'}
+						{!connecting ? 'Connect wallet' : 'Connecting...'}
 					</Button>
 				</Box>
 			</Center>
