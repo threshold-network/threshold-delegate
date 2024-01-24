@@ -11,8 +11,6 @@ import { FaMoon, FaSun } from "react-icons/fa";
  * @name ColorModeSwitcher
  * @description ColorModeSwitcher component that allows the user to switch between light and dark mode.
  * @dev This component is used in the Header component.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
 const ColorModeSwitcher = (props) => {
     const { toggleColorMode } = useColorMode();

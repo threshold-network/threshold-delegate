@@ -8,8 +8,6 @@ import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
  * @param {string} children - The children (Icon).
  * @param {string} label - The label (VisuallyHidden)
  * @param {string} href - The href - Destination URL.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
 const SocialButton = ({ children, label, href }) => {
     return (
@@ -38,8 +36,6 @@ const SocialButton = ({ children, label, href }) => {
  * @name Footer
  * @description Footer component that displays the footer of the app.
  * @dev This component is used in the Layout component.
- * @author Jesús Sánchez Fernández | WWW.JSANCHEZFDZ.ES
- * @version 1.0.0
  */
 const Footer = () => {
     return (
@@ -58,7 +54,7 @@ const Footer = () => {
                 justify={{ base: "center", md: "space-between" }}
                 align={{ base: "center", md: "center" }}>
                 <Image src="/images/logo.svg" width="10%" alt="logo" filter={useColorModeValue("invert(1)", "")} />
-                <Text>© 2023 Threshold Network. All rights reserved</Text>
+                <Text>© 2024 Threshold Network. All rights reserved</Text>
                 <Stack direction={"row"} spacing={6}>
                     <SocialButton label={"Twitter"} href={"#"}>
                         <FaTwitter />
