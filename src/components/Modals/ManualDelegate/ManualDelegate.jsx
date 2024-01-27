@@ -63,7 +63,7 @@ const ManualDelegate = ({ onClose, isOpen, address, tContract, stakedContract })
 
     const handleDelegateMyself = () => {
         setDelegateAddress(address);
-        setIsValidAddress(true)
+        checkAddress(address);
     };
 
     const handleClose = () => {
