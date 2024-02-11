@@ -76,7 +76,6 @@ const Delegate = ({ provider, address, signer, setAccount }) => {
 
     // ------------------ GRAPHQL ------------------
     const lowerCaseAddress = address.toLowerCase();
-    // 0x5cf1703a1c99a4b42eb056535840e93118177232
     const QUERY = `
         query {
             account(id: "${lowerCaseAddress}") {
@@ -293,7 +292,7 @@ const Delegate = ({ provider, address, signer, setAccount }) => {
                 <DelegateModal
                     isOpen={isOpen}
                     onClose={onClose}
-                    address={address}
+                    address={selectedStake ? selectedStake.idStake : address}
                     selectedUser={selectedUser}
                     balance={selectedStake ? selectedStake.totalStaked : data.balance}
                     tContract={selectedStake ? undefined : signedTContract}
@@ -304,7 +303,7 @@ const Delegate = ({ provider, address, signer, setAccount }) => {
                 <ManualDelegate
                     isOpen={isOpenManual}
                     onClose={onCloseManual}
-                    address={address}
+                    address={selectedStake ? selectedStake.idStake : address}
                     tContract={selectedStake ? undefined : signedTContract}
                     stakedContract={selectedStake ? signedTStaking : undefined}
                 />
