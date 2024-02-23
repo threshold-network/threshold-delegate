@@ -13,7 +13,7 @@
     "@web3-onboard/injected-wallets": "2.8.3",
     "@web3-onboard/react": "2.7.1",
     "@web3-onboard/taho": "2.0.1",
-    "@web3-onboard/walletconnect": "2.4.7",
+    "@web3-onboard/walletconnect": "2.5.3",
     "@web3modal/ethereum": "2.1.1",
     "@web3modal/react": "2.1.1",
     "axios": "1.6.5",
