@@ -1,0 +1,8 @@
+/static/js/*.js
+Cache-Control: public, max-age=2592000, immutable
+
+/static/css/*.css
+Cache-Control: public, max-age=2592000, immutable
+
+/*.html
+Cache-Control: public, max-age=0, must-revalidate
